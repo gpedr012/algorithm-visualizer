@@ -1,0 +1,8 @@
+.sidebar {
+    height: 96vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    background-color: cyan;
+    flex-basis: 10%;
+
+}
