@@ -1,9 +1,12 @@
 import React from "react";
 import classes from "./MainContent.module.css"
+import Visualization from "./Visualization/Visualization";
 
 const MainContent = () => {
     return (
-        <div>Main Content</div>
+        <div className={classes['main-content']}>
+            <Visualization/>
+        </div>
     )
 }
 
