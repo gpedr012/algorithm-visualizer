@@ -1,0 +1,16 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid purple;
+    margin: 0 4px 0 4px;
+    flex: 0 0 1.75rem;
+}
+
+.bar {
+    background-color: lightcoral;
+
+}
+
+.number {
+    text-align: center;
+}
