@@ -1,13 +1,24 @@
-export const createNewRandArray = (size) => {
+import {IDLE} from "./sortingStates";
 
+export const createArrayOfBars = (size) => {
+    const MIN = 1;
+    const MAX = 100;
     let arr = [];
 
     for (let i = 0; i < size; i++) {
-        let randNum = Math.floor(Math.random() * 101 + 1);
-        arr.push({idx: i, num: randNum});
+        let randNum = Math.floor(Math.random() * (MAX - MIN) + MIN);
+        arr.push(createBar(i, randNum, IDLE));
     }
-
-    console.log("Rand array is: ", arr);
     return arr;
+
+}
+
+const createBar = (key, num, curState) => {
+
+    return {
+        key,
+        num,
+        curState
+    }
 
 }
