@@ -1,4 +1,4 @@
-import {COMPARE, SWAP_END, SWAP_INIT} from "./sortingStates";
+import {COMPARE, FINAL_POS, SWAP_END, SWAP_INIT} from "./sortingStates";
 
 export const bubbleSort = (array) => {
     const arrayCopy = [...array];
@@ -16,6 +16,8 @@ export const bubbleSort = (array) => {
         }
 
     }
+
+    actions.push(createAction(FINAL_POS, null, null));
 
     return actions;
 

@@ -4,7 +4,7 @@ import Bar from "./Bar/Bar";
 import {createArrayOfBars} from "../../util/utils";
 import {bubbleSort} from "../../util/sorter";
 import ActionMenu from "../ActionMenu/ActionMenu";
-import {COMPARE, IDLE, SWAP_END, SWAP_INIT} from "../../util/sortingStates";
+import {COMPARE, FINAL_POS, IDLE, SWAP_END, SWAP_INIT} from "../../util/sortingStates";
 
 const SortVisualization = () => {
 
@@ -15,7 +15,7 @@ const SortVisualization = () => {
 
     useEffect(() => {
 
-        let arr = createArrayOfBars(4);
+        let arr = createArrayOfBars(3);
 
         setBarsArray(arr);
     }, [])
@@ -106,6 +106,8 @@ const SortVisualization = () => {
 
                     return newArray
                 });
+                break;
+            case FINAL_POS:
                 break;
 
             default:
