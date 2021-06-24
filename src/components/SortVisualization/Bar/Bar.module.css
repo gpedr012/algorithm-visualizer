@@ -6,10 +6,21 @@
     flex: 0 0 1.75rem;
 }
 
-.bar {
-    background-color: lightcoral;
+.bar-idle {
+    background-color: mediumslateblue;
 
 }
+
+.bar-compare {
+    background-color: forestgreen;
+
+}
+
+.bar-swap {
+    background-color: orangered;
+
+}
+
 
 .number {
     padding: 0 2px 0 2px;
