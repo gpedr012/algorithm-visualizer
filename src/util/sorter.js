@@ -23,6 +23,32 @@ export const bubbleSort = (array) => {
 
 }
 
+export const selectionSort = (array) => {
+    const arrayCopy = [...array];
+    let actions = [];
+
+    for (let i = 0; i < arrayCopy.length; i++) {
+        let minIdx = i;
+        for (let j = i; j < arrayCopy.length; j++) {
+
+            actions.push(createAction(COMPARE, minIdx, j));
+            if(arrayCopy[j].num < arrayCopy[minIdx].num) {
+                minIdx = j;
+            }
+        }
+        if(minIdx !== i) {
+            actions.push(createAction(SWAP_INIT, minIdx, i));
+            swap(arrayCopy, minIdx, i);
+            actions.push(createAction(SWAP_END, minIdx, i));
+
+        }
+    }
+
+    actions.push(createAction(FINAL_POS, null, null));
+
+    return actions;
+}
+
 const createAction = (actionType, idxOne, idxTwo) => {
 
     return {
@@ -34,6 +60,9 @@ const createAction = (actionType, idxOne, idxTwo) => {
 }
 
 const swap = (array, idxOne, idxTwo) => {
+
+    if(idxOne === idxTwo)
+        return;
 
     let temp = array[idxOne];
     array[idxOne] = array[idxTwo];
