@@ -4,7 +4,7 @@ import Bar from "./Bar/Bar";
 import {createArrayOfBars} from "../../util/utils";
 import {bubbleSort} from "../../util/sorter";
 import ActionMenu from "../ActionMenu/ActionMenu";
-import {COMPARE, SWAP_END, SWAP_INIT} from "../../util/sortingStates";
+import {COMPARE, IDLE, SWAP_END, SWAP_INIT} from "../../util/sortingStates";
 
 const SortVisualization = () => {
 
@@ -15,35 +15,75 @@ const SortVisualization = () => {
 
     useEffect(() => {
 
-        let arr = createArrayOfBars(6);
+        let arr = createArrayOfBars(4);
 
         setBarsArray(arr);
     }, [])
 
     useEffect(() => {
 
-        if(startedVisualization && progressionIndex < actionsList.length) {
+        if (startedVisualization && progressionIndex < actionsList.length) {
 
             setTimeout(() => {
 
                 console.log(`Currently at:\n ${JSON.stringify(actionsList[progressionIndex])}`);
                 const currentAction = actionsList[progressionIndex];
+                cleanUpAtIndex(progressionIndex);
                 processAction(currentAction);
-                setProgressionIndex(oldV => oldV+1);
+                setProgressionIndex(oldV => oldV + 1);
 
 
             }, 1000)
-
         }
 
     }, [startedVisualization, progressionIndex, actionsList])
+
+    const cleanUpAtIndex = (index) => {
+
+        let barOne;
+        let barTwo;
+        let changed = false;
+
+        if (index === 0) {
+            return;
+        }
+
+        if (actionsList[index - 1].idxOne !== actionsList[index].idxOne) {
+            const idx = actionsList[index - 1].idxOne
+            barOne = barsArray[idx];
+            barOne = {idx, data: {...barOne, curState: IDLE}};
+            changed = true;
+        }
+
+        if (actionsList[index - 1].idxTwo !== actionsList[index].idxTwo) {
+            const idx = actionsList[index - 1].idxTwo;
+            barTwo = barsArray[idx];
+            barTwo = {idx, data: {...barTwo, curState: IDLE}};
+            changed = true;
+        }
+        if (changed) {
+            setBarsArray(oldV => {
+                let newV = [...oldV];
+                if (barOne) {
+                    newV[barOne.idx] = barOne.data;
+                }
+                if (barTwo) {
+                    newV[barTwo.idx] = barTwo.data;
+                }
+
+                return newV;
+            });
+        }
+
+    }
+
 
     const processAction = (action) => {
         const actionType = action.actionType;
         const indexOne = action.idxOne;
         const indexTwo = action.idxTwo;
 
-        switch(actionType) {
+        switch (actionType) {
             case COMPARE:
             case SWAP_INIT:
                 setBarsArray((oldArr) => {
@@ -64,9 +104,6 @@ const SortVisualization = () => {
                     newArray[indexOne] = indexOneObj;
                     newArray[indexTwo] = indexTwoObj;
 
-
-                    console.log(`New array: ${JSON.stringify(newArray)}`);
-
                     return newArray
                 });
                 break;
@@ -83,10 +120,10 @@ const SortVisualization = () => {
         setStartedVisualization(true);
     }
 
-    // let array = createNewRandArray(3);
-    // console.log(array);
-    // //array = bubbleSort(array);
-    // console.log(array);
+// let array = createNewRandArray(3);
+// console.log(array);
+// //array = bubbleSort(array);
+// console.log(array);
     return (
 
         <React.Fragment>
