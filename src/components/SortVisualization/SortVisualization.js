@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import classes from "./SortVisualization.module.css"
 import Bar from "./Bar/Bar";
 import {createArrayOfBars} from "../../util/utils";
-import {bubbleSort} from "../../util/sorter";
+import {bubbleSort, selectionSort, insertionSort} from "../../util/sorter";
 import ActionMenu from "../ActionMenu/ActionMenu";
 import {COMPARE, FINAL_POS, IDLE, SWAP_END, SWAP_INIT} from "../../util/sortingStates";
 
@@ -15,7 +15,7 @@ const SortVisualization = () => {
 
     useEffect(() => {
 
-        let arr = createArrayOfBars(3);
+        let arr = createArrayOfBars(5);
 
         setBarsArray(arr);
     }, [])
@@ -28,7 +28,7 @@ const SortVisualization = () => {
 
                 console.log(`Currently at:\n ${JSON.stringify(actionsList[progressionIndex])}`);
                 const currentAction = actionsList[progressionIndex];
-                cleanUpAtIndex(progressionIndex);
+                cleanUpPreviousAction(progressionIndex);
                 processAction(currentAction);
                 setProgressionIndex(oldV => oldV + 1);
 
@@ -38,27 +38,29 @@ const SortVisualization = () => {
 
     }, [startedVisualization, progressionIndex, actionsList])
 
-    const cleanUpAtIndex = (index) => {
+    const cleanUpPreviousAction = (index) => {
 
         let barOne;
         let barTwo;
         let changed = false;
 
-        if (index === 0) {
+        if (index === 0 || actionsList[index - 1].actionType === FINAL_POS) {
             return;
         }
 
         if (actionsList[index - 1].idxOne !== actionsList[index].idxOne) {
             const idx = actionsList[index - 1].idxOne
             barOne = barsArray[idx];
-            barOne = {idx, data: {...barOne, curState: IDLE}};
+            const isFinalized = barOne.hasFinalPos;
+            barOne = {idx, data: {...barOne, curState: isFinalized ? FINAL_POS : IDLE}};
             changed = true;
         }
 
         if (actionsList[index - 1].idxTwo !== actionsList[index].idxTwo) {
             const idx = actionsList[index - 1].idxTwo;
             barTwo = barsArray[idx];
-            barTwo = {idx, data: {...barTwo, curState: IDLE}};
+            const isFinalized = barTwo.hasFinalPos;
+            barTwo = {idx, data: {...barTwo, curState: isFinalized ? FINAL_POS : IDLE}};
             changed = true;
         }
         if (changed) {
@@ -86,28 +88,35 @@ const SortVisualization = () => {
         switch (actionType) {
             case COMPARE:
             case SWAP_INIT:
+
                 setBarsArray((oldArr) => {
                     const newArray = [...oldArr];
-                    newArray[indexOne].curState = actionType;
-                    newArray[indexTwo].curState = actionType;
+                    newArray[indexOne] = {...newArray[indexOne], curState: actionType};
+                    newArray[indexTwo] = {...newArray[indexTwo], curState: actionType};
 
                     return newArray;
                 });
+
+                break;
+            case FINAL_POS:
+                setBarsArray(oldArr => {
+                    const newArray = [...oldArr];
+                    newArray[indexOne] = {...newArray[indexOne], curState: actionType, hasFinalPos: true};
+
+                    return newArray;
+                })
+
                 break;
 
             case SWAP_END:
                 setBarsArray((oldArr) => {
                     const newArray = [...oldArr];
-                    const indexOneObj = {...oldArr[indexOne], num: oldArr[indexTwo].num};
-                    const indexTwoObj = {...oldArr[indexTwo], num: oldArr[indexOne].num};
-
-                    newArray[indexOne] = indexOneObj;
-                    newArray[indexTwo] = indexTwoObj;
+                    const temp = {...newArray[indexOne]};
+                    newArray[indexOne] = {...newArray[indexTwo]};
+                    newArray[indexTwo] = temp;
 
                     return newArray
                 });
-                break;
-            case FINAL_POS:
                 break;
 
             default:
@@ -118,7 +127,7 @@ const SortVisualization = () => {
     }
 
     const sort = () => {
-        setActionsList(bubbleSort(barsArray));
+        setActionsList(insertionSort(barsArray));
         setStartedVisualization(true);
     }
 

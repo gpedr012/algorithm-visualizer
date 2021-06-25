@@ -5,7 +5,8 @@ export const bubbleSort = (array) => {
     let actions = [];
 
     for (let i = 0; i < arrayCopy.length - 1; i++) {
-        for (let j = 0; j < arrayCopy.length - i - 1; j++) {
+        let j;
+        for (j = 0; j < arrayCopy.length - i - 1; j++) {
             actions.push(createAction(COMPARE, j, j+1));
             if(arrayCopy[j].num > arrayCopy[j+1].num) {
                 actions.push(createAction(SWAP_INIT, j, j+1));
@@ -14,10 +15,10 @@ export const bubbleSort = (array) => {
             }
 
         }
-
+        actions.push(createAction(FINAL_POS, j, null));
     }
 
-    actions.push(createAction(FINAL_POS, null, null));
+    actions.push(createAction(FINAL_POS, 0, null));
 
     return actions;
 
@@ -27,7 +28,8 @@ export const selectionSort = (array) => {
     const arrayCopy = [...array];
     let actions = [];
 
-    for (let i = 0; i < arrayCopy.length; i++) {
+    let i;
+    for (i = 0; i < arrayCopy.length; i++) {
         let minIdx = i;
         for (let j = i; j < arrayCopy.length; j++) {
 
@@ -40,11 +42,33 @@ export const selectionSort = (array) => {
             actions.push(createAction(SWAP_INIT, minIdx, i));
             swap(arrayCopy, minIdx, i);
             actions.push(createAction(SWAP_END, minIdx, i));
+            actions.push(createAction(FINAL_POS, i, null));
 
+        } else {
+            actions.push(createAction(FINAL_POS, i, null));
         }
     }
 
-    actions.push(createAction(FINAL_POS, null, null));
+    return actions;
+}
+
+export const insertionSort = (array) => {
+    const arrayCopy = [...array];
+    const actions = [];
+    let j, i;
+    actions.push(createAction(FINAL_POS, 0));
+    for (i = 1; i < arrayCopy.length; i++) {
+        let tempObj = arrayCopy[i];
+        for (j = i - 1; j >= 0 && arrayCopy[j].num > tempObj.num; j--) {
+            actions.push(createAction(SWAP_INIT, j+1, j));
+            arrayCopy[j+1] = arrayCopy[j];
+            actions.push(createAction(SWAP_END, j+1, j));
+        }
+        actions.push(createAction(FINAL_POS, j + 1));
+        arrayCopy[j+1] = tempObj;
+    }
+//
+    actions.push(createAction(FINAL_POS, i - 1));
 
     return actions;
 }

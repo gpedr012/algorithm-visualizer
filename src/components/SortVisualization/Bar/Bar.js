@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Bar.module.css"
-import {COMPARE, IDLE, SWAP_END, SWAP_INIT} from "../../../util/sortingStates";
+import {COMPARE, FINAL_POS, IDLE, SWAP_END, SWAP_INIT} from "../../../util/sortingStates";
 
 const Bar = (props) => {
     const heightModifier = 5;
@@ -16,6 +16,9 @@ const Bar = (props) => {
             case SWAP_INIT:
             case SWAP_END:
                 return classes['bar-swap'];
+
+            case FINAL_POS:
+                return classes['bar-final'];
 
             default:
                 return classes['bar-idle'];

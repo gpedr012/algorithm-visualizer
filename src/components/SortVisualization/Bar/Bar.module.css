@@ -9,16 +9,22 @@
 .bar-idle {
     background-color: mediumslateblue;
 
+
 }
 
 .bar-compare {
     background-color: forestgreen;
+
 
 }
 
 .bar-swap {
     background-color: orangered;
 
+}
+
+.bar-final {
+    background-color: goldenrod;
 }
 
 

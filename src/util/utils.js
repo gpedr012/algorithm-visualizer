@@ -18,7 +18,8 @@ const createBar = (key, num, curState) => {
     return {
         key,
         num,
-        curState
+        curState,
+        hasFinalPos: false
     }
 
 }
