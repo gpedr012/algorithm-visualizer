@@ -6,9 +6,10 @@ const Sidebar = () => {
         <div className={classes.sidebar}>
             <nav>
                 <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
+                    <h3>Sorting Algorithms</h3>
+                    <li>Bubble Sort</li>
+                    <li>Selection Sort</li>
+                    <li>Insertion Sort</li>
                 </ul>
             </nav>
         </div>

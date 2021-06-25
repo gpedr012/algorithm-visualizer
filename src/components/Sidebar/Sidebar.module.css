@@ -2,10 +2,41 @@
     height: 96vh;
     margin-top: 2vh;
     margin-bottom: 2vh;
-    background-color: cyan;
-    flex-basis: 10%;
+    background-color: rgb(50, 63, 113);
+    position: absolute;
+    width: 20%;
+
+    border-radius: 0 10px 10px 0;
+    box-shadow: 1px 3px 5px 1px rgb(47, 54, 87);
+    transition: left 0.5s;
+}
+
+.sidebar nav {
+    margin: 2rem 1rem 0 0.5rem;
 }
 
 .sidebar ul {
+    color: #e2e2e2;
+    font-size: 4rem;
     list-style-type: none;
+}
+
+.sidebar ul li:first-child {
+    margin-top: 5rem;
+}
+
+.sidebar ul li {
+    border-bottom: 2px solid transparent;
+    margin-top: 2rem;
+    margin-left: 1.5rem;
+    margin-right: 3rem;
+    width: fit-content;
+    cursor: pointer;
+    transition: all 0.5s;
+    color: #9db3fc;
+}
+
+.sidebar ul li:hover {
+    border-bottom-color: #ac7878;
+    color: #ac7878;
 }
