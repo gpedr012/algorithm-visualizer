@@ -5,10 +5,16 @@
     background-color: rgb(50, 63, 113);
     position: absolute;
     width: 20%;
-
+    left: -19%;
     border-radius: 0 10px 10px 0;
-    box-shadow: 1px 3px 5px 1px rgb(47, 54, 87);
+    box-shadow: 1px 3px 8px 2px rgba(0, 0, 0, 0.51);
     transition: left 0.5s;
+    font-size: 0;
+}
+
+.sidebar__open {
+    left: 0;
+    font-size: 10rem;
 }
 
 .sidebar nav {
@@ -17,7 +23,6 @@
 
 .sidebar ul {
     color: #e2e2e2;
-    font-size: 4rem;
     list-style-type: none;
 }
 
@@ -39,4 +44,42 @@
 .sidebar ul li:hover {
     border-bottom-color: #ac7878;
     color: #ac7878;
+}
+
+.button {
+    cursor: pointer;
+    bottom: 50%;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.51);
+    border-radius: 10px;
+    left: 0.5rem;
+    position: absolute;
+    background-color: rgb(87, 100, 158);
+    border: 3px solid transparent;
+    width: 4rem;
+    height: 7rem;
+    z-index: 2000;
+    transition: color 0.5s, border-color 0.5s;
+    color: rgb(141, 142, 255);
+
+}
+
+.button:hover {
+    border: 3px solid rgb(141, 142, 255);
+    color: rgb(192, 201, 252);
+}
+
+.button-icon {
+
+    padding-top: 0.2rem;
+    padding-left: 0.2rem;
+    font-size: 5rem;
+    text-align: center;
+    transition: transform 0.5s;
+
+}
+
+.button-icon__close {
+    transform: rotate(180deg) translateY(-0.5rem);
+
+
 }
