@@ -1,12 +1,20 @@
 import React, {useState} from "react";
 import classes from "./Sidebar.module.css";
+import {algorithms} from "../../util/utils";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [activeAlgo, setActiveAlgo] = useState(algorithms.BUBBLE.code);
 
     const handleSidebarBtn = () => {
         setIsOpen(oldV => !oldV);
+
+    }
+
+    const handleNavSelection = (algo) => {
+        setActiveAlgo(algo.code);
+        props.handleAlgoSelection(algo);
 
     }
 
@@ -24,9 +32,9 @@ const Sidebar = () => {
                 <nav>
                     <ul>
                         <h3>Sorting Algorithms</h3>
-                        <li>Bubble Sort</li>
-                        <li>Selection Sort</li>
-                        <li>Insertion Sort</li>
+                        <li className={activeAlgo === algorithms.BUBBLE.code ? classes.active : ''} onClick={handleNavSelection.bind(null, algorithms.BUBBLE)}>Bubble Sort</li>
+                        <li className={activeAlgo === algorithms.SELECTION.code ? classes.active : ''} onClick={handleNavSelection.bind(null, algorithms.SELECTION)}>Selection Sort</li>
+                        <li className={activeAlgo === algorithms.INSERTION.code ? classes.active : ''} onClick={handleNavSelection.bind(null, algorithms.INSERTION)}>Insertion Sort</li>
                     </ul>
                 </nav>
             </div>

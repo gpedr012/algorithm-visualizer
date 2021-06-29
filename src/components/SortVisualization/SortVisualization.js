@@ -3,10 +3,10 @@ import classes from "./SortVisualization.module.css"
 import Bar from "./Bar/Bar";
 import {createArrayOfBars} from "../../util/utils";
 import {bubbleSort, selectionSort, insertionSort} from "../../util/sorter";
-import ActionMenu from "../ActionMenu/ActionMenu";
+import ActionMenu from "./ActionMenu/ActionMenu";
 import {COMPARE, FINAL_POS, IDLE, SWAP_END, SWAP_INIT} from "../../util/sortingStates";
 
-const SortVisualization = () => {
+const SortVisualization = (props) => {
 
     const [barsArray, setBarsArray] = useState([]);
     const [progressionIndex, setProgressionIndex] = useState(0);
@@ -15,7 +15,7 @@ const SortVisualization = () => {
 
     useEffect(() => {
 
-        let arr = createArrayOfBars(5);
+        let arr = createArrayOfBars(25);
 
         setBarsArray(arr);
     }, [])
@@ -33,7 +33,7 @@ const SortVisualization = () => {
                 setProgressionIndex(oldV => oldV + 1);
 
 
-            }, 1000)
+            }, 50)
         }
 
     }, [startedVisualization, progressionIndex, actionsList])
@@ -127,7 +127,8 @@ const SortVisualization = () => {
     }
 
     const sort = () => {
-        setActionsList(insertionSort(barsArray));
+        console.log(props.algorithm);
+        setActionsList(props.algorithm.func((barsArray)));
         setStartedVisualization(true);
     }
 
@@ -144,7 +145,8 @@ const SortVisualization = () => {
                 })}
             </div>
             <ActionMenu>
-                <button onClick={sort}>Sort</button>
+                    {props.algorithm.name}
+                    <button onClick={sort}>Sort</button>
             </ActionMenu>
         </React.Fragment>
 

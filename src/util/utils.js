@@ -1,4 +1,5 @@
 import {IDLE} from "./sortingStates";
+import {bubbleSort, insertionSort, selectionSort} from "./sorter";
 
 export const createArrayOfBars = (size) => {
     const MIN = 1;
@@ -11,6 +12,12 @@ export const createArrayOfBars = (size) => {
     }
     return arr;
 
+}
+
+export const algorithms = {
+    BUBBLE: {code: 0, name: 'Bubble', func: bubbleSort},
+    SELECTION: {code: 1, name: 'Selection', func: selectionSort},
+    INSERTION: {code: 2, name: 'Insertion', func: insertionSort}
 }
 
 const createBar = (key, num, curState) => {

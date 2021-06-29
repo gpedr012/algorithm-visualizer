@@ -41,6 +41,16 @@
     color: #9db3fc;
 }
 
+.sidebar ul li.active {
+    color: #e1e85d;
+}
+
+.sidebar ul li.active:hover {
+    color: #e1e85d;
+    border-bottom-color: #e1e85d;
+}
+
+
 .sidebar ul li:hover {
     border-bottom-color: #ac7878;
     color: #ac7878;
