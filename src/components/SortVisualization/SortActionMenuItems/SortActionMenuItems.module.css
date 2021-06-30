@@ -1,0 +1,52 @@
+.content {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: left;
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin: 0 1rem 0 1rem;
+}
+
+.sort-btn  {
+    font-size: 2.5rem;
+    font-weight: 400;
+    background-color: transparent;
+    border: 1px dotted black;
+    cursor: pointer;
+    margin-left: 0.512rem;
+    transition: all, 0.5s;
+    margin-right: 2rem;
+
+}
+
+.sort-btn:hover {
+    border-bottom: 1px solid #3e3e3e;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid black;
+    height: 36px;
+    width: 16px;
+    border-radius: 3px;
+    background: white;
+    cursor: pointer;
+
+
+}
+
+.slider::-ms-track {
+    width: 100%;
+    cursor: pointer;
+
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}

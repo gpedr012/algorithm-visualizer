@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import classes from "./SortVisualization.module.css"
 import Bar from "./Bar/Bar";
 import {createArrayOfBars} from "../../util/utils";
-import {bubbleSort, selectionSort, insertionSort} from "../../util/sorter";
-import ActionMenu from "./ActionMenu/ActionMenu";
+import ActionMenu from "../ActionMenu/ActionMenu";
 import {COMPARE, FINAL_POS, IDLE, SWAP_END, SWAP_INIT} from "../../util/sortingStates";
+import SortActionMenuItems from "./SortActionMenuItems/SortActionMenuItems";
 
 const SortVisualization = (props) => {
 
@@ -132,6 +132,7 @@ const SortVisualization = (props) => {
         setStartedVisualization(true);
     }
 
+
 // let array = createNewRandArray(3);
 // console.log(array);
 // //array = bubbleSort(array);
@@ -145,8 +146,7 @@ const SortVisualization = (props) => {
                 })}
             </div>
             <ActionMenu>
-                    {props.algorithm.name}
-                    <button onClick={sort}>Sort</button>
+                <SortActionMenuItems algorithm={props.algorithm} sort={sort}/>
             </ActionMenu>
         </React.Fragment>
 

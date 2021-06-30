@@ -14,6 +14,7 @@ const Sidebar = (props) => {
 
     const handleNavSelection = (algo) => {
         setActiveAlgo(algo.code);
+        setTimeout(() => handleSidebarBtn(), 250);
         props.handleAlgoSelection(algo);
 
     }
