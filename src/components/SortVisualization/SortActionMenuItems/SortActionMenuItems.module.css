@@ -1,52 +1,108 @@
 .content {
     display: flex;
+    flex-wrap: nowrap;
     flex: 1;
     align-items: center;
-    justify-content: left;
+    justify-content: flex-start;
     font-size: 2.5rem;
     font-weight: 400;
     margin: 0 1rem 0 1rem;
 }
 
-.sort-btn  {
+.btn  {
     font-size: 2.5rem;
     font-weight: 400;
     background-color: transparent;
-    border: 1px dotted black;
+    border: 2px dotted black;
     cursor: pointer;
     margin-left: 0.512rem;
-    transition: all, 0.5s;
     margin-right: 2rem;
 
 }
 
-.sort-btn:hover {
-    border-bottom: 1px solid #3e3e3e;
+.btn:hover {
+    border-bottom: 2px solid slateblue;
+    color: slateblue;
+}
+
+
+.slider__container {
+    display: flex;
+    margin-left: 3rem;
+    margin-top: 1rem;
+
+
+}
+
+.slider__container p {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: 300;
 }
 
 .slider {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
     -webkit-appearance: none;
-    width: 100%;
+    width: 75%;
     background: transparent;
 }
 
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    border: 1px solid black;
-    height: 36px;
+    height: 2rem;
     width: 16px;
-    border-radius: 3px;
-    background: white;
+    background: rgb(173, 165, 243);
     cursor: pointer;
+    margin-top: -0.15rem;
+}
+
+.slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 2rem;
+    cursor: pointer;
+    background-color: #5871ba;
+    border: 1px solid #89afef;
+}
+
+.slider::-moz-range-thumb{
+    -webkit-appearance: none;
+    height: 2rem;
+    width: 16px;
+    background: rgb(173, 165, 243);
+    cursor: pointer;
+    margin-top: -0.15rem;
+    border-radius: 0;
+}
+
+.slider::-moz-range-track {
+    width: 100%;
+    height: 2rem;
+    cursor: pointer;
+    background-color: #5871ba;
+    border: 1px solid #89afef;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
 
 }
 
-.slider::-ms-track {
-    width: 100%;
-    cursor: pointer;
+.divisor {
+    border-right: 4px solid black;
+    margin-right: 1rem;
+}
 
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
+.input-group label {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+
+}
+
+.input-group input {
+    font-size: 1.5rem;
 }
