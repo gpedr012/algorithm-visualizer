@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import classes from "./SortVisualization.module.css"
 import Bar from "./Bar/Bar";
 import {createArrayOfBars} from "../../util/utils";
@@ -12,6 +12,7 @@ const SortVisualization = (props) => {
     const [progressionIndex, setProgressionIndex] = useState(0);
     const [startedVisualization, setStartedVisualization] = useState(false);
     const [actionsList, setActionsList] = useState([]);
+    const [animSpeed, setAnimSpeed] = useState(500);
 
     useEffect(() => {
 
@@ -33,7 +34,9 @@ const SortVisualization = (props) => {
                 setProgressionIndex(oldV => oldV + 1);
 
 
-            }, 50)
+            }, animSpeed)
+        } else if (startedVisualization) {
+            setStartedVisualization(false);
         }
 
     }, [startedVisualization, progressionIndex, actionsList])
@@ -127,9 +130,19 @@ const SortVisualization = (props) => {
     }
 
     const sort = () => {
-        console.log(props.algorithm);
         setActionsList(props.algorithm.func((barsArray)));
         setStartedVisualization(true);
+    }
+
+    const handleNewArray = (array) => {
+        setStartedVisualization(false);
+        setProgressionIndex(0);
+        setBarsArray(array);
+
+    }
+
+    const handleSpeedChange = (val) => {
+         setAnimSpeed(val);
     }
 
 
@@ -146,7 +159,7 @@ const SortVisualization = (props) => {
                 })}
             </div>
             <ActionMenu>
-                <SortActionMenuItems algorithm={props.algorithm} sort={sort}/>
+                <SortActionMenuItems animSpeed={animSpeed} handleSpeedChange={handleSpeedChange} algorithm={props.algorithm} sort={sort} handleNewArray={handleNewArray}/>
             </ActionMenu>
         </React.Fragment>
 

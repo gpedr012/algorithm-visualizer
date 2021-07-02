@@ -15,7 +15,7 @@
     background-color: transparent;
     border: 2px dotted black;
     cursor: pointer;
-    margin-left: 0.512rem;
+    margin-left: 1rem;
     margin-right: 2rem;
 
 }
@@ -45,7 +45,7 @@
     margin-right: 0.5rem;
     margin-bottom: 1rem;
     -webkit-appearance: none;
-    width: 75%;
+    width: 200px;
     background: transparent;
 }
 
@@ -105,4 +105,11 @@
 
 .input-group input {
     font-size: 1.5rem;
+}
+
+.input-message {
+    margin-left: 2rem;
+    font-weight: 400;
+    font-size: 2.25rem;
+    color: darkred;
 }
