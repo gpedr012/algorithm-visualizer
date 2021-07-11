@@ -19,7 +19,7 @@ const Sidebar = (props) => {
 
     }
 
-    let buttonClass = isOpen ?  `${classes['button-icon']} ${classes['button-icon__close']}` : classes['button-icon'];
+    let buttonClass = isOpen ? `${classes['button-icon']} ${classes['button-icon__close']}` : classes['button-icon'];
     let sideBarClass = isOpen ? `${classes.sidebar} ${classes['sidebar__open']}` : classes.sidebar;
 
     return (
@@ -33,9 +33,11 @@ const Sidebar = (props) => {
                 <nav>
                     <ul>
                         <h3>Sorting Algorithms</h3>
-                        <li className={activeAlgo === algorithms.BUBBLE.code ? classes.active : ''} onClick={handleNavSelection.bind(null, algorithms.BUBBLE)}>Bubble Sort</li>
-                        <li className={activeAlgo === algorithms.SELECTION.code ? classes.active : ''} onClick={handleNavSelection.bind(null, algorithms.SELECTION)}>Selection Sort</li>
-                        <li className={activeAlgo === algorithms.INSERTION.code ? classes.active : ''} onClick={handleNavSelection.bind(null, algorithms.INSERTION)}>Insertion Sort</li>
+
+                        {Object.keys(algorithms).map(
+                            value => <li key={algorithms[value].code} className={activeAlgo === algorithms[value].code ? classes.active : ''}
+                                         onClick={handleNavSelection.bind(null, algorithms[value])}>{algorithms[value].name} Sort</li>
+                        )}
                     </ul>
                 </nav>
             </div>

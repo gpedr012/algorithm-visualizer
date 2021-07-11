@@ -1,4 +1,13 @@
-import {COMPARE, FINAL_POS, SET_PIVOT, SWAP_END, SWAP_INIT} from "./sortingStates";
+import {
+    COMPARE,
+    FINAL_POS,
+    QKS_LEFT_WALL,
+    QKS_RIGHT_WALL,
+    QKS_SET_PIVOT, QKS_UNSET_PIVOT,
+    SET_PIVOT,
+    SWAP_END,
+    SWAP_INIT
+} from "./sortingStates";
 
 export const bubbleSort = (array) => {
     const arrayCopy = [...array];
@@ -85,6 +94,7 @@ export const quickSort = (array) => {
 const quickSortEntry = (array, lowPtr, highPtr, actions) => {
     if (lowPtr < highPtr) {
         const pivotIdx = partitionQkSort(array, lowPtr, highPtr, actions);
+        actions.push(createAction(QKS_UNSET_PIVOT, pivotIdx));
         quickSortEntry(array, lowPtr, pivotIdx, actions);
         quickSortEntry(array, pivotIdx + 1, highPtr, actions);
 
@@ -93,22 +103,26 @@ const quickSortEntry = (array, lowPtr, highPtr, actions) => {
 
 const partitionQkSort = (array, lowPtr, highPtr, actions) => {
     const pivot = array[highPtr]
-    actions.push(createAction(SET_PIVOT, highPtr));
+    actions.push(createAction(QKS_SET_PIVOT, highPtr));
     let i = lowPtr - 1;
     let j = highPtr + 1;
 
     while (true) {
         do {
             i++;
+            actions.push(createAction(QKS_LEFT_WALL, i));
         } while (array[i] < pivot)
         do {
             j--;
+            actions.push(createAction(QKS_RIGHT_WALL, j));
         } while (array[j] > pivot)
         if (i >= j) {
             return j;
         }
 
+        actions.push(createAction(SWAP_INIT, i, j));
         swap(array, i, j);
+        actions.push(createAction(SWAP_END, i, j));
     }
 
 }

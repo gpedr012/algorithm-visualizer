@@ -99,7 +99,6 @@ const SortActionMenuItems = (props) => {
                    min={"1"} max={"1000"} value={props.animSpeed}/>
             <p>Slow</p>
         </div>
-
     </div>);
 
     let createArraySubContent = (
