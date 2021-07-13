@@ -3,7 +3,16 @@ import classes from "./SortVisualization.module.css"
 import Bar from "./Bar/Bar";
 import {createArrayOfBars} from "../../util/utils";
 import ActionMenu from "../ActionMenu/ActionMenu";
-import {COMPARE, FINAL_POS, IDLE, SWAP_END, SWAP_INIT} from "../../util/sortingStates";
+import {
+    COMPARE,
+    FINAL_POS,
+    IDLE,
+    QKS_LIMITS,
+    QKS_SET_PIVOT,
+    QKS_UNSET_PIVOT,
+    SWAP_END,
+    SWAP_INIT
+} from "../../util/sortingStates";
 import SortActionMenuItems from "./SortActionMenuItems/SortActionMenuItems";
 import {quickSort} from "../../util/sorter";
 
@@ -39,24 +48,22 @@ const SortVisualization = (props) => {
     }, [startedVisualization, progressionIndex, actionsList])
 
     const cleanUpPreviousAction = (index) => {
-
         const newBars = [];
 
         if (index === 0 || actionsList[index - 1].actionType === FINAL_POS) {
             return;
         }
 
-        for (let i = 0; i < actionsList[index].indexes.length; i++) {
-            if(actionsList[index - 1].indexes[i] !== actionsList[index].indexes[i]) {
+        for (let i = 0; i < actionsList[index - 1].indexes.length; i++) {
+            if (actionsList[index - 1].indexes[i] !== actionsList[index].indexes[i]) {
                 const idx = actionsList[index - 1].indexes[i];
                 let newBar = barsArray[idx];
-                const finalized = newBar.hasFinalPos;
-                newBar = {idx, data:{...newBar, curState: finalized ? FINAL_POS : IDLE}};
+                newBar = {idx, data: {...newBar, curState: newBar.revState}};
                 newBars.push(newBar);
             }
         }
 
-        if(newBars.length !== 0) {
+        if (newBars.length !== 0) {
             setBarsArray(oldV => {
                 let newV = [...oldV];
                 for (const bar of newBars) {
@@ -66,7 +73,6 @@ const SortVisualization = (props) => {
                 return newV;
             })
         }
-
     }
 
 
@@ -79,12 +85,11 @@ const SortVisualization = (props) => {
         switch (actionType) {
             case COMPARE:
             case SWAP_INIT:
-
+            case QKS_LIMITS:
                 setBarsArray((oldArr) => {
                     const newArray = [...oldArr];
                     for (const idx of indexes) {
-
-                        newArray[idx] = {...newArray[idx], curState: actionType};
+                            newArray[idx] = {...newArray[idx], curState: actionType};
 
                     }
 
@@ -92,10 +97,31 @@ const SortVisualization = (props) => {
                 });
 
                 break;
+
+            case QKS_SET_PIVOT:
+                setBarsArray(oldArr => {
+                    const newArray = [...oldArr];
+                    newArray[indexes[0]] = {...newArray[indexes[0]], curState: actionType, revState: actionType};
+
+                    return newArray;
+                });
+
+                break;
+
+            case QKS_UNSET_PIVOT:
+                setBarsArray(oldArr => {
+                    const newArray = [...oldArr];
+                    newArray[indexes[0]] = {...oldArr[indexes[0]], curState: IDLE, revState: IDLE};
+
+                    return newArray;
+                });
+
+                break;
+
             case FINAL_POS:
                 setBarsArray(oldArr => {
                     const newArray = [...oldArr];
-                    newArray[indexes[0]] = {...newArray[indexes[0]], curState: actionType, hasFinalPos: true};
+                    newArray[indexes[0]] = {...newArray[indexes[0]], curState: actionType, revState: FINAL_POS};
 
                     return newArray;
                 })
@@ -113,6 +139,7 @@ const SortVisualization = (props) => {
                     return newArray
                 });
                 break;
+
 
             default:
                 throw new Error('Default case processing action.');
@@ -136,7 +163,7 @@ const SortVisualization = (props) => {
     }
 
     const handleSpeedChange = (val) => {
-         setAnimSpeed(val);
+        setAnimSpeed(val);
     }
 
 
@@ -149,7 +176,8 @@ const SortVisualization = (props) => {
                 })}
             </div>
             <ActionMenu>
-                <SortActionMenuItems animSpeed={animSpeed} handleSpeedChange={handleSpeedChange} algorithm={props.algorithm} sort={sort} handleNewArray={handleNewArray}/>
+                <SortActionMenuItems animSpeed={animSpeed} handleSpeedChange={handleSpeedChange}
+                                     algorithm={props.algorithm} sort={sort} handleNewArray={handleNewArray}/>
             </ActionMenu>
         </React.Fragment>
 

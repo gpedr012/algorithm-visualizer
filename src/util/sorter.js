@@ -1,10 +1,9 @@
 import {
     COMPARE,
     FINAL_POS,
-    QKS_LEFT_WALL,
-    QKS_RIGHT_WALL,
-    QKS_SET_PIVOT, QKS_UNSET_PIVOT,
-    SET_PIVOT,
+    QKS_LIMITS,
+    QKS_SET_PIVOT,
+    QKS_UNSET_PIVOT,
     SWAP_END,
     SWAP_INIT
 } from "./sortingStates";
@@ -84,9 +83,12 @@ export const insertionSort = (array) => {
 
 export const quickSort = (array) => {
 
-    const arrayCopy = [...array];
 
-    quickSortEntry(arrayCopy, 0, arrayCopy.length - 1, []);
+    const arrayCopy = [...array];
+    // const arrayCopy = [44,64,46,36];
+    const actions = [];
+    quickSortEntry(arrayCopy, 0, arrayCopy.length - 1, actions);
+    return actions;
 
 
 }
@@ -95,35 +97,53 @@ const quickSortEntry = (array, lowPtr, highPtr, actions) => {
     if (lowPtr < highPtr) {
         const pivotIdx = partitionQkSort(array, lowPtr, highPtr, actions);
         actions.push(createAction(QKS_UNSET_PIVOT, pivotIdx));
-        quickSortEntry(array, lowPtr, pivotIdx, actions);
+        actions.push(createAction(FINAL_POS, pivotIdx));
+        quickSortEntry(array, lowPtr, pivotIdx - 1, actions);
         quickSortEntry(array, pivotIdx + 1, highPtr, actions);
 
+    } else if (lowPtr === highPtr) {
+        console.log(`LOWPTR: ${lowPtr}, HIGHPTR: ${highPtr}`);
+        actions.push(createAction(FINAL_POS, lowPtr));
     }
 }
 
 const partitionQkSort = (array, lowPtr, highPtr, actions) => {
-    const pivot = array[highPtr]
+    const pivot = array[highPtr].num;
     actions.push(createAction(QKS_SET_PIVOT, highPtr));
-    let i = lowPtr - 1;
-    let j = highPtr + 1;
+    let i = lowPtr;
+    let j = highPtr;
 
-    while (true) {
-        do {
+    actions.push(createAction(QKS_LIMITS, i));
+
+    while (i < j) {
+        while (array[i].num < pivot) {
             i++;
-            actions.push(createAction(QKS_LEFT_WALL, i));
-        } while (array[i] < pivot)
-        do {
-            j--;
-            actions.push(createAction(QKS_RIGHT_WALL, j));
-        } while (array[j] > pivot)
-        if (i >= j) {
-            return j;
+
+            if (j !== highPtr) {
+                actions.push(createAction(QKS_LIMITS, i, j));
+            } else {
+                actions.push(createAction(QKS_LIMITS, i));
+            }
         }
 
-        actions.push(createAction(SWAP_INIT, i, j));
-        swap(array, i, j);
-        actions.push(createAction(SWAP_END, i, j));
+        while (array[j].num >= pivot && j > lowPtr) {
+            j--;
+            actions.push(createAction(QKS_LIMITS, i, j));
+        }
+
+        if (i < j) {
+            actions.push(createAction(SWAP_INIT, i, j));
+            swap(array, i, j);
+            actions.push(createAction(SWAP_END, i, j));
+        }
+        // actions.push(createAction(SWAP_END, i, j));
     }
+
+    actions.push(createAction(SWAP_INIT, i, highPtr));
+    swap(array, i, highPtr);
+    actions.push(createAction(SWAP_END, i, highPtr));
+    return i;
+
 
 }
 
