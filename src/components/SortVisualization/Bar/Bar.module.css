@@ -6,25 +6,33 @@
     flex: 0 0 1.75rem;
 }
 
-.bar-idle {
+.bar__idle {
     background-color: mediumslateblue;
 
 
 }
 
-.bar-compare {
+.bar__compare {
     background-color: forestgreen;
 
 
 }
 
-.bar-swap {
+.bar__swap_init, .bar__swap_end {
     background-color: orangered;
 
 }
 
-.bar-final {
+.bar__final_pos {
     background-color: goldenrod;
+}
+
+.bar__qks_set_pivot {
+    background-color: darkblue;
+}
+
+.bar__qks_limits {
+    background-color: darkolivegreen;
 }
 
 

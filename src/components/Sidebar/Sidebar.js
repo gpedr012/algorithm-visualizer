@@ -5,7 +5,6 @@ import {algorithms} from "../../util/utils";
 const Sidebar = (props) => {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [activeAlgo, setActiveAlgo] = useState(algorithms.BUBBLE.code);
 
     const handleSidebarBtn = () => {
         setIsOpen(oldV => !oldV);
@@ -13,7 +12,6 @@ const Sidebar = (props) => {
     }
 
     const handleNavSelection = (algo) => {
-        setActiveAlgo(algo.code);
         setTimeout(() => handleSidebarBtn(), 250);
         props.handleAlgoSelection(algo);
 
@@ -35,7 +33,7 @@ const Sidebar = (props) => {
                         <h3>Sorting Algorithms</h3>
 
                         {Object.keys(algorithms).map(
-                            value => <li key={algorithms[value].code} className={activeAlgo === algorithms[value].code ? classes.active : ''}
+                            value => <li key={algorithms[value].code} className={props.activeAlgorithm.code === algorithms[value].code ? classes.active : ''}
                                          onClick={handleNavSelection.bind(null, algorithms[value])}>{algorithms[value].name} Sort</li>
                         )}
                     </ul>

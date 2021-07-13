@@ -16,7 +16,7 @@ function App() {
 
     return (
         <div className={classes.content}>
-            <Sidebar handleAlgoSelection={handleAlgoSelection}/>
+            <Sidebar activeAlgorithm={algorithm} handleAlgoSelection={handleAlgoSelection}/>
             <MainContent algorithm={algorithm}/>
         </div>
     );
