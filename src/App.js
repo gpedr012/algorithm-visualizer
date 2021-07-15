@@ -6,7 +6,7 @@ import {algorithms} from "./util/utils";
 
 function App() {
 
-    const [algorithm, setAlgorithm] = useState(algorithms.BUBBLE);
+    const [algorithm, setAlgorithm] = useState(algorithms.MERGESORT);
 
     const handleAlgoSelection = (algorithm) => {
         console.log(algorithm)
