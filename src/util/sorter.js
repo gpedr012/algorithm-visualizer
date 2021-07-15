@@ -1,6 +1,6 @@
 import {
     COMPARE,
-    FINAL_POS,
+    FINAL_POS, MGS_REPLACE,
     QKS_LIMITS,
     QKS_SET_PIVOT,
     QKS_UNSET_PIVOT,
@@ -128,7 +128,7 @@ const partitionQkSort = (array, lowPtr, highPtr, actions) => {
 
         while (array[j].num >= pivot && j > lowPtr) {
             j--;
-            if(i < j) {
+            if (i < j) {
                 actions.push(createAction(QKS_LIMITS, i, j));
             }
 
@@ -151,68 +151,83 @@ const partitionQkSort = (array, lowPtr, highPtr, actions) => {
 
 export const mergeSort = (array) => {
 
-    // const arrayCopy = [...array];
-    //const actions = [];
-    const arrayCopy = [3,7,1,9,13,43,5,2,15,12,20,21,22,30,29,26,41,69,99,91,90,54];
+    const arrayCopy = [...array];
+    const actions = [];
+    // const arrayCopy = [3, 7, 1, 9, 13, 43, 5, 2, 15, 12, 20, 21, 22, 30, 29, 26, 41, 69, 99, 91, 90, 54];
     // const arrayCopy = [7, 3, 1, 9, 13, 43, 5];
     // const arrayCopy = [1,2,3,4,5];
     // const arrayCopy = [5,4,3,2,1];
-    console.log(`Original Array: ${arrayCopy}`);
-    mergeSortEntry(arrayCopy, 0, arrayCopy.length - 1);
-    console.log(`Sorted Array: ${arrayCopy}`);
+    // console.log(`Original Array: ${JSON.stringify(arrayCopy)}`);
+    mergeSortEntry(arrayCopy, 0, arrayCopy.length - 1, actions);
+    // console.log(`Sorted Array: ${JSON.stringify(arrayCopy)}`);
 
-    return [];
+    // console.log(JSON.stringify(actions));
+    return actions;
 
 }
 
-const mergeSortEntry = (array, low, high, actions) => {
-    if (low >= high) {
+const mergeSortEntry = (array, lowIdx, highIdx, actions) => {
+    if (lowIdx >= highIdx) {
         return;
     }
-    const middle = Math.floor(low + ((high - low) / 2));
+    const middleIdx = Math.floor(lowIdx + ((highIdx - lowIdx) / 2));
 
-    mergeSortEntry(array, low, middle, actions);
-    mergeSortEntry(array, middle + 1, high, actions);
-    merge(array, low, middle, high, actions);
+    mergeSortEntry(array, lowIdx, middleIdx, actions);
+    mergeSortEntry(array, middleIdx + 1, highIdx, actions);
+    merge(array, lowIdx, middleIdx, highIdx, actions);
 }
 
-const merge = (array, low, middle, high, actions) => {
+const merge = (array, lowIdx, middleIdx, highIdx, actions) => {
     const tempArr = [];
 
-    let leftIdx = low;
-    let rightIdx = middle + 1;
+    let leftIdx = lowIdx;
+    let rightIdx = middleIdx + 1;
 
-    while(leftIdx <= middle && rightIdx <= high) {
-        if(array[leftIdx] < array[rightIdx]) {
+
+    while (leftIdx <= middleIdx && rightIdx <= highIdx) {
+        console.log(`left idx : ${leftIdx}, rightIdx: ${rightIdx}`);
+        actions.push(createAction(COMPARE, leftIdx, rightIdx));
+        if (array[leftIdx].num < array[rightIdx].num) {
             tempArr.push(array[leftIdx]);
             leftIdx++;
+
         } else {
             tempArr.push(array[rightIdx]);
             rightIdx++;
         }
     }
 
-    while(leftIdx <= middle) {
+    while (leftIdx <= middleIdx) {
         tempArr.push(array[leftIdx]);
         leftIdx++;
     }
 
-    while(rightIdx <= high) {
+    while (rightIdx <= highIdx) {
         tempArr.push(array[rightIdx]);
         rightIdx++;
     }
 
 
-    for (let i = 0, mainArrIdx = low; i < tempArr.length; i++, mainArrIdx++) {
+    for (let i = 0, mainArrIdx = lowIdx; i < tempArr.length; i++, mainArrIdx++) {
+        console.log(`I: ${i}, MAINARRIDX: ${mainArrIdx}`);
         array[mainArrIdx] = tempArr[i];
+        actions.push(createAction(MGS_REPLACE, tempArr[i], mainArrIdx));
     }
 }
 
-const createAction = (actionType, ...index) => {
+const createAction = (actionType, ...args) => {
 
-    return {
-        actionType,
-        indexes: [...index]
+    if (actionType === MGS_REPLACE) {
+        return {
+            actionType: actionType,
+            replacer: args[0],
+            indexes: args.slice(1)
+        }
+    } else {
+        return {
+            actionType,
+            indexes: [...args]
+        }
     }
 
 }

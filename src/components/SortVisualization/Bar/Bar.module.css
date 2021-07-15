@@ -35,6 +35,9 @@
     background-color: darkolivegreen;
 }
 
+.bar__mgs_replace {
+    background-color: mediumvioletred;
+}
 
 .number {
     padding: 0 2px 0 2px;

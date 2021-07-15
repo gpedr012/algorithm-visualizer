@@ -6,7 +6,7 @@ import ActionMenu from "../ActionMenu/ActionMenu";
 import {
     COMPARE,
     FINAL_POS,
-    IDLE,
+    IDLE, MGS_REPLACE,
     QKS_LIMITS,
     QKS_SET_PIVOT,
     QKS_UNSET_PIVOT,
@@ -25,7 +25,7 @@ const SortVisualization = (props) => {
     const [animSpeed, setAnimSpeed] = useState(500);
 
     useEffect(() => {
-        setBarsArray(createArrayOfBars(20));
+        setBarsArray(createArrayOfBars(5));
 
     }, [])
 
@@ -56,6 +56,7 @@ const SortVisualization = (props) => {
 
         for (let i = 0; i < actionsList[index - 1].indexes.length; i++) {
             if (actionsList[index - 1].indexes[i] !== actionsList[index].indexes[i]) {
+                console.log(`idx for newbar: ${actionsList[index - 1].indexes[i]}`);
                 const idx = actionsList[index - 1].indexes[i];
                 let newBar = barsArray[idx];
                 newBar = {idx, data: {...newBar, curState: newBar.revState}};
@@ -64,13 +65,14 @@ const SortVisualization = (props) => {
         }
 
         if (newBars.length !== 0) {
-            setBarsArray(oldV => {
-                let newV = [...oldV];
+            setBarsArray(oldArray => {
+                const newArray = [...oldArray];
                 for (const bar of newBars) {
-                    newV[bar.idx] = bar.data;
+                    console.log(`NEW BAR REPLACEMENT: ${JSON.stringify(bar)}`);
+                    newArray[bar.idx] = bar.data;
                 }
 
-                return newV;
+                return newArray;
             })
         }
     }
@@ -86,8 +88,8 @@ const SortVisualization = (props) => {
             case COMPARE:
             case SWAP_INIT:
             case QKS_LIMITS:
-                setBarsArray((oldArr) => {
-                    const newArray = [...oldArr];
+                setBarsArray((oldArray) => {
+                    const newArray = [...oldArray];
                     for (const idx of indexes) {
                             newArray[idx] = {...newArray[idx], curState: actionType};
 
@@ -99,8 +101,8 @@ const SortVisualization = (props) => {
                 break;
 
             case QKS_SET_PIVOT:
-                setBarsArray(oldArr => {
-                    const newArray = [...oldArr];
+                setBarsArray(oldArray => {
+                    const newArray = [...oldArray];
                     newArray[indexes[0]] = {...newArray[indexes[0]], curState: actionType, revState: actionType};
 
                     return newArray;
@@ -109,9 +111,23 @@ const SortVisualization = (props) => {
                 break;
 
             case QKS_UNSET_PIVOT:
-                setBarsArray(oldArr => {
-                    const newArray = [...oldArr];
-                    newArray[indexes[0]] = {...oldArr[indexes[0]], curState: IDLE, revState: IDLE};
+                setBarsArray(oldArray => {
+                    const newArray = [...oldArray];
+                    newArray[indexes[0]] = {...oldArray[indexes[0]], curState: IDLE, revState: IDLE};
+
+                    return newArray;
+                });
+
+                break;
+
+            case MGS_REPLACE:
+                setBarsArray(oldArray => {
+                    const newArray = [...oldArray];
+
+                    // console.log(`REPLACER IS: ${JSON.stringify(action.replacer)}`)
+                    newArray[indexes[0]] = {...newArray[indexes[0]], num: action.replacer.num, curState: actionType};
+
+
 
                     return newArray;
                 });
@@ -119,8 +135,8 @@ const SortVisualization = (props) => {
                 break;
 
             case FINAL_POS:
-                setBarsArray(oldArr => {
-                    const newArray = [...oldArr];
+                setBarsArray(oldArray => {
+                    const newArray = [...oldArray];
                     newArray[indexes[0]] = {...newArray[indexes[0]], curState: actionType, revState: FINAL_POS};
 
                     return newArray;
@@ -129,9 +145,9 @@ const SortVisualization = (props) => {
                 break;
 
             case SWAP_END:
-                setBarsArray((oldArr) => {
+                setBarsArray((oldArray) => {
                     const indexOne = indexes[0], indexTwo = indexes[1];
-                    const newArray = [...oldArr];
+                    const newArray = [...oldArray];
                     const temp = {...newArray[indexOne]};
                     newArray[indexOne] = {...newArray[indexTwo]};
                     newArray[indexTwo] = temp;
