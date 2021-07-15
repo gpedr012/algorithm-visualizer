@@ -3,8 +3,9 @@ import classes from "./SortActionMenuItems.module.css";
 import {createArrayOfBars} from "../../../util/utils";
 
 const MINIMUM = 1;
-const MAXIMUM = 100;
+const MAXIMUM = 300;
 
+//TODO: Only allow to upper limit when inserting items manually in custom array.
 const SortActionMenuItems = (props) => {
 
     const [showingMain, setShowingMain] = useState(true);

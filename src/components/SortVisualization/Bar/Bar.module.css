@@ -2,8 +2,34 @@
     display: flex;
     flex-direction: column;
 
-    margin: 0 4px 0 4px;
+    margin: 0 0.5rem 0 0.5rem;
     flex: 0 0 1.75rem;
+}
+
+
+.content.slim-mode__light {
+    margin: 0 0.33rem 0 0.33rem;
+    flex: 0 0 1.25rem;
+}
+
+.content.slim-mode__medium {
+    margin: 0 0.20rem 0 0.20rem;
+    flex: 0 0 0.80rem;
+}
+
+.content.slim-mode__heavy {
+    margin: 0 0.10rem 0 0.10rem;
+    flex: 0 0 0.50rem;
+}
+
+.content.slim-mode__heavier {
+    margin: 0 0.05rem 0 0.05rem;
+    flex: 0 0 0.30rem;
+}
+
+.content.slim-mode__heaviest {
+    margin: 0 0 0 0;
+    flex: 0 0 1px;
 }
 
 .bar__idle {
@@ -46,4 +72,9 @@
     border: 1px solid black;
     border-top: none;
 
+}
+
+.number.slim-mode__light {
+    font-size: 1rem;
+    padding: 0 1px 0 1px;
 }

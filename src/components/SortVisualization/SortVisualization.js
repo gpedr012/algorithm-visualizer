@@ -23,9 +23,11 @@ const SortVisualization = (props) => {
     const [startedVisualization, setStartedVisualization] = useState(false);
     const [actionsList, setActionsList] = useState([]);
     const [animSpeed, setAnimSpeed] = useState(500);
+    const [slimMode, setSlimMode] = useState('');
 
     useEffect(() => {
-        setBarsArray(createArrayOfBars(5));
+        setBarsArray(createArrayOfBars(20));
+
 
     }, [])
 
@@ -174,6 +176,21 @@ const SortVisualization = (props) => {
     const handleNewArray = (array) => {
         setStartedVisualization(false);
         setProgressionIndex(0);
+        setSlimMode(() => {
+            if(array.length <= 50) {
+                return '';
+            } else if (array.length <= 80) {
+                return 'light';
+            } else if (array.length <= 140) {
+                return 'medium';
+            } else if (array.length <= 240) {
+                return 'heavy';
+            } else if (array.length <= 300) {
+                return 'heavier';
+            } else {
+                return 'heaviest';
+            }
+        });
         setBarsArray(array);
 
     }
@@ -188,7 +205,7 @@ const SortVisualization = (props) => {
         <React.Fragment>
             <div className={classes.visualization}>
                 {barsArray.map(item => {
-                    return <Bar barState={item.curState} key={item.key} height={item.num} barName={item.num}/>
+                    return <Bar slimMode={slimMode} barState={item.curState} key={item.key} height={item.num}/>
                 })}
             </div>
             <ActionMenu>

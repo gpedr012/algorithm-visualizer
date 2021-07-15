@@ -1,9 +1,11 @@
 .visualization {
     display: flex;
     align-items: flex-end;
-    justify-content: center;
+    justify-content: start;
     flex: 1;
     align-self: center;
-    height: 60vh
+    height: 60vh;
+    margin-left: 5%;
+    margin-right: 2.5%;
 
 }

@@ -9,15 +9,20 @@ const Bar = (props) => {
 
     }
 
-    return (
+    console.log(props.slimMode);
 
-        <div className={classes.content}>
+    let numberContainer = (
+        <div className={classes.number}>
+            {props.height}
+        </div>
+    );
+
+    return (
+        <div className={` ${classes.content} ${props.slimMode ? classes['slim-mode__' + props.slimMode] : ''} `}>
             <div className={getBarClass(props.barState)} style={{height: props.height * heightModifier + "px"}}>
                 &nbsp;
             </div>
-            <div className={classes.number}>
-                {props.barName}
-            </div>
+            {props.slimMode ? '' : numberContainer}
         </div>
     )
 }
