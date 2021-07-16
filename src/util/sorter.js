@@ -212,6 +212,10 @@ const merge = (array, lowIdx, middleIdx, highIdx, actions) => {
         console.log(`I: ${i}, MAINARRIDX: ${mainArrIdx}`);
         array[mainArrIdx] = tempArr[i];
         actions.push(createAction(MGS_REPLACE, tempArr[i], mainArrIdx));
+
+        if(lowIdx === 0 && highIdx === array.length - 1) {
+            actions.push(createAction(FINAL_POS, mainArrIdx));
+        }
     }
 }
 

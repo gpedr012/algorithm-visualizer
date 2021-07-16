@@ -32,8 +32,8 @@ export const algorithms = {
     BUBBLE: {code: 0, name: 'Bubble', func: bubbleSort},
     SELECTION: {code: 1, name: 'Selection', func: selectionSort},
     INSERTION: {code: 2, name: 'Insertion', func: insertionSort},
-    QUICKSORT: {code: 3, name: 'Quicksort', func: quickSort},
-    MERGESORT: {code: 4, name: 'Mergesort', func: mergeSort}
+    QUICKSORT: {code: 3, name: 'Quick', func: quickSort},
+    MERGESORT: {code: 4, name: 'Merge', func: mergeSort}
 
 }
 
