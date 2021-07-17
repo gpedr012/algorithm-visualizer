@@ -5,7 +5,6 @@ import {createArrayOfBars} from "../../../util/utils";
 const MINIMUM = 1;
 const MAXIMUM = 300;
 
-//TODO: Only allow to upper limit when inserting items manually in custom array.
 const SortActionMenuItems = (props) => {
 
     const [showingMain, setShowingMain] = useState(true);
@@ -84,6 +83,11 @@ const SortActionMenuItems = (props) => {
             finalItems.push(number);
 
         });
+
+        if(finalItems.length > MAXIMUM) {
+            setErrorMsg("Minimum amount of numbers is 1 and maximum is 300.");
+            error = true;
+        }
 
         if(!error) {
             props.handleNewArray(createArrayOfBars(null, null, null, finalItems));

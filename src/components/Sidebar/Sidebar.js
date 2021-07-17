@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import classes from "./Sidebar.module.css";
 import {algorithms} from "../../util/utils";
+import Backdrop from "./Backdrop/Backdrop";
 
 const Sidebar = (props) => {
 
@@ -20,8 +21,13 @@ const Sidebar = (props) => {
     let buttonClass = isOpen ? `${classes['button-icon']} ${classes['button-icon__close']}` : classes['button-icon'];
     let sideBarClass = isOpen ? `${classes.sidebar} ${classes['sidebar__open']}` : classes.sidebar;
 
+    const handleBackdropClicked = () => {
+        setIsOpen(false);
+    }
+
     return (
         <React.Fragment>
+            <Backdrop navIsOpen={isOpen} handleBackdropClicked={handleBackdropClicked}/>
             <div onClick={handleSidebarBtn} className={classes.button}>
                 <div className={buttonClass}>
                     >
