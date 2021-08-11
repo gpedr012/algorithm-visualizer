@@ -14,7 +14,7 @@
 }
 
 .sidebar__open {
-    left: 0;
+    left: 0 !important;
     font-size: 10rem;
 }
 
@@ -92,5 +92,55 @@
 .button-icon__close {
     transform: rotate(180deg) translateY(-0.5rem);
 
+}
+
+@media (max-width: 1000px) {
+    .sidebar {
+        width: 40%;
+        left: -40%;
+    }
+}
+
+@media (max-width: 800px) {
+    .sidebar {
+        width: 50%;
+        left: -100%;
+    }
+
+    .button {
+        width: 4rem;
+        height: 6rem;
+    }
+
+    .button-icon {
+        font-size: 4rem;
+    }
 
 }
+
+@media (max-width: 500px) {
+    .sidebar {
+        width: 80%;
+    }
+}
+
+@media (max-width: 360px) {
+    .sidebar {
+        width: 95%;
+    }
+
+    .button {
+        width: 3rem;
+        height: 4rem;
+    }
+
+    .button-icon {
+        font-size: 2.75rem;
+        padding-top: 0;
+    }
+
+    .button-icon__close {
+        transform: rotate(180deg) translateY(-0.15rem);
+    }
+}
+
