@@ -8,3 +8,11 @@
     background-color: #ccc;
 
 }
+
+@media (max-width: 800px) {
+    .action-menu {
+        margin: 0.3em 0 0.25em 0;
+        padding: 0.1em;
+        width: 85%;
+    }
+}

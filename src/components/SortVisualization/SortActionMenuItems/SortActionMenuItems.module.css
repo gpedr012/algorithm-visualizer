@@ -113,3 +113,33 @@
     font-size: 2.25rem;
     color: darkred;
 }
+
+
+@media (max-width: 800px) {
+    .content{
+        font-size: 1.75rem;
+    }
+
+    .btn {
+        font-size: 1.75rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+
+    .slider__container {
+        margin-left: 0;
+    }
+
+    .slider__container p {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .content {
+        font-size: 1.5rem;
+    }
+    .btn {
+        font-size: 1.5rem;
+    }
+}

@@ -122,6 +122,16 @@
     .sidebar {
         width: 80%;
     }
+
+    .button {
+        width: 3.5rem;
+        height: 5rem;
+    }
+
+    .button-icon {
+        font-size: 3rem;
+
+    }
 }
 
 @media (max-width: 360px) {
